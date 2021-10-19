@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tracking | VKmonitoring</title>
+    {% include 'bs_head.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='track.css') }}">
+</head>
+
+<body>
+    {% include 'bs_header_nav.html' %}
+    <div class="card" style='background-image: url({{photo_url}})'>
+        <div class="blur"></div>
+        <h1 class='card__id'>{{client.vkid}}</h1>
+    </div>
+    <div class="tracking">
+        <h2>Дата: {{date.day}}.{{date.month}}.{{date.year}}</h2>
+
+        {% for e in tracking %}
+            <p>
+            {% if e.status==1 %}
+                <i class='tracking_online'>Онлайн |</i>
+                {% else %}
+                <i class='tracking_offline'>Оффлайн |</i>
+            {% endif %} 
+            <b>{{e.date_from.hour}}:{{e.date_from.minute}}:{{e.date_from.second}}</b> 
+            - 
+            <b>
+            {% if e.date_to.year==1970 %}
+                До сих пор
+                {% else %}
+                {{e.date_to.hour}}:{{e.date_to.minute}}:{{e.date_to.second}}
+                {% endif %}
+            </b>
+                </p>
+        {% endfor %}
+
+    </div>
+    
+</body>
+
+</html>

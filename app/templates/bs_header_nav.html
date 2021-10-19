@@ -1,0 +1,15 @@
+<nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="{% if current_user.is_admin %}/service{% else %}/{% endif %}">
+        <img src="{{ url_for('static', filename='vk_black.svg') }}" width="30" height="30" class="d-inline-block align-top" alt="">
+        Monitoring
+        
+    </a>
+    <nav class="nav justify-content-center">
+        {% if current_user.is_admin %}
+        <a class="nav-link text-light" href="#">Учетные записи</a>
+        <a class="nav-link text-light" href="#">Отслеживаемые</a>
+        <a class="nav-link text-light" href="#">Система</a>
+        <a class="nav-link text-light" href="/service/heartbeat">Пульс</a>
+        {% endif %}
+    </nav>
+</nav>

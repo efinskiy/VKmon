@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Tracking | VKmonitoring</title>
+    {% include 'bs_head.html' %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='track.css') }}">
+</head>
+
+<body>
+    {% include 'bs_header_nav.html' %}
+    <div class="card" style='background: #2b2b2b;'>
+        <div class="blur"></div>
+        <h1 class='card__id' style='color: #fff'>HeartBeat❤️</h1>
+    </div>
+    <div class="tracking" style='align-items: center;'>
+
+        {% for string in data %}
+            <p>
+            <b> Worker: {{string[0].vkid}} </b>
+            {% if string[0].tracking_enabled==1 %}
+               <i> Status: <i class='tracking_online'>Work⚒️</i></i>
+            {% else %}
+                <i>Status: <i class='tracking_offline'>Disabled❌</i></i>
+            {% endif %}
+            {% if string[1]==0 %}
+                <i>Core: <i class="tracking_offline">Dead☠️</i></i>
+            {% else %}
+                <i>Core: <i class="tracking_online">Alive🤖</i></i>
+            {% endif %}
+                </p>
+        {% endfor %}
+
+    </div>
+    
+</body>
+
+</html>

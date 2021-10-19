@@ -1,0 +1,11 @@
+#formRegistr {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+}
+label{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Administration | VKmonitoring</title>
+    {% include 'bs_head.html' %}
+    <style>
+        .table td,
+        .table th {
+            vertical-align: middle !important;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'bs_header_nav.html' %}
+    <div class="container-fluid bg-light">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"># </th>
+                    <th scope="col">Пользователь</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Кто создал</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Действия</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <form action="/api/addnewtrack" method="post">
+                        <th scope='row' class="text-success">NEW</th>
+                        <td><input name='target' class="form-control form-control-sm" type="text" placeholder="Target"></td>
+                        <td>{{ d_now }}</td>
+                        <td>{{ current_user.login }}</td>
+                        <td></td>
+                        <td><button type="submit" class="btn btn-outline-success btn-sm">Создать</button></td>
+                    </form>
+                </tr>
+                {% for client in clients %}
+                <tr>
+                    <th scope="row">{{client.id}}</th>
+                    <td scope="row"><a href="/track/{{client.id}}">{{client.vkid}} | {{client.pid}}</a></td>
+                    <td scope="row">{{client.create_time}}</td>
+                    <td scope="row">{{client.user.login}}</td>
+                    <td scope="row">
+                        {% if client.tracking_enabled %}
+                        В работе
+                        {% else %}
+                        Приостановлено
+                        {% endif %}
+                    </td>
+                    <td scope="row">
+                        <div class="btn-group" role="group">
+                            {% if client.tracking_enabled==1 %}
+                            <a href="/api/stop?id={{client.id}}"><button type="button" class="btn btn-outline-warning btn-sm">Остановить</button></a>
+                            {% elif client.tracking_enabled==0 %}
+                            <a href="/api/start?id={{client.id}}"><button type="button" class="btn btn-outline-success btn-sm">Запустить</button></a>
+                            {% endif %}
+                            <a href="/api/delete?id={{client.id}}"><button type="button" class="btn btn-outline-danger btn-sm">Удалить</button></a>
+                            <a href="/api/reboot?id={{client.id}}"><button type="button" class="btn btn-outline-warning btn-sm">Перезапуск</button></a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
